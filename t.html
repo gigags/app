@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>videojs</title>
+    <base href="http://ffga.ga">	
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/6.3.3/video-js.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/6.3.3/video.js"></script>
+    <script src="https://unpkg.com/videojs-flash/dist/videojs-flash.js"></script>
+	<script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
+	<script src="/assets/videojs/ie8/videojs-ie8.min.js"></script>
+</head>
+<body style="margin:0;background:black" oncontextmenu="return false;">
+<div id="player" style="width:100%;height:100%">
+	<video id="video" class="video-js vjs-16-9 vjs-default-skin vjs-big-play-centered"></video>
+</div>
+<script>
+$(function() {
+	$.get('https://api.ffga.ga/c.php?id=nmAhIR1yEaOTE0EEnTMjIwq3qP85Mxg1', function(sources) {
+		videojs.Hls.xhr.beforeRequest = function(options) {
+		  options.uri = options.uri.replace(/(.*)\.dailymotion\.com/i, 'https://vid2-ec.dmcdn.net');
+		  console.log(options.uri);
+		  return options;
+		};
+		var player = videojs('video',{controls:true});
+		player.ready(function() {
+			this.src(sources);
+		});
+
+	});
+});
+</script>
+</body>
+</html>
